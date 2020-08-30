@@ -62,5 +62,14 @@ pipeline {
             }
         }
         
+        stage('Checking if app is up') {
+              steps{
+                  echo 'Checking if app is up...'
+                  withAWS(credentials: 'capstone', region: 'ap-south-1') {
+                     sh "curl a8c5c6b62d7c045378e5c05164b89250-1817186258.ap-south-1.elb.amazonaws.com"
+                }
+            }
+        } 
+        
     }
 }
