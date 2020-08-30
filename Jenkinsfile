@@ -28,7 +28,7 @@ pipeline {
         stage('Building Docker Image') {
             steps {
                 sh '''
-						docker build -t imjuhilsomaiya/capstone_project .
+						docker build -t imjuhilsomaiya/capstone_project app/
 					'''
             }
         }
