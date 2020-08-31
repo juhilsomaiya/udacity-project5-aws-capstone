@@ -106,7 +106,7 @@ pipeline {
 			    steps {
 				    withAWS(region:'ap-south-1', credentials:'capstone') {
 					    sh '''
-						    kubectl apply -f .clusters/blueservice.json
+						    kubectl apply -f ./clusters/blueservice.json
 					    '''
 				    }
 			    }
@@ -116,7 +116,7 @@ pipeline {
 			    steps {
 				    withAWS(region:'ap-south-1', credentials:'capstone') {
 					    sh '''
-						    kubectl apply -f .clusters/greenservice.json
+						    kubectl apply -f ./clusters/greenservice.json
 					    '''
 				    }
 			    }
