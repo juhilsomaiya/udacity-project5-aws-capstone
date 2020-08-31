@@ -5,7 +5,7 @@
         }
     },
     "instance": {
-        "@automaticShutdown": "1440"
+        "@automaticShutdown": "10080"
     },
     "javascript": {
         "@use_jsbeautify": true

@@ -47,7 +47,7 @@ pipeline {
             }
         }
         
-        stage('Deploying') {
+        /* stage('Deploying') {
               steps{
                   echo 'Deploying to AWS...'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
@@ -69,7 +69,58 @@ pipeline {
                      sh "curl a8c5c6b62d7c045378e5c05164b89250-1817186258.ap-south-1.elb.amazonaws.com"
                 }
             }
-        } 
+        } */ 
+        
+        
+        stage('Set current kubectl context') {
+		    	steps {
+				    withAWS(region:'ap-south-1', credentials:'capstone') {
+					    sh '''
+						    kubectl config use-context arn:aws:eks:ap-south-1:272442762360:cluster/udacity-capstone-project
+					    '''
+				    }
+			    }
+		    }
+        
+        stage('Deploy blue container') {
+			    steps {
+				    withAWS(region:'ap-south-1', credentials:'capstone') {
+					    sh '''
+						    kubectl apply -f ./clusters/bluecontroller.json
+					    '''
+				    }
+			    }
+		    }
+		    
+		    stage('Deploy green container') {
+			    steps {
+				    withAWS(region:'ap-south-1', credentials:'capstone') {
+					    sh '''
+						    kubectl apply -f ./clusters/greencontroller.json
+					    '''
+				    }
+			    }
+		    }
+		    
+		    stage('Create the service in the cluster, redirect to blue') {
+			    steps {
+				    withAWS(region:'ap-south-1', credentials:'capstone') {
+					    sh '''
+						    kubectl apply -f .clusters/blueservice.json
+					    '''
+				    }
+			    }
+		    }
+		    
+		    stage('Create the service in the cluster, redirect to green') {
+			    steps {
+				    withAWS(region:'ap-south-1', credentials:'capstone') {
+					    sh '''
+						    kubectl apply -f .clusters/greenservice.json
+					    '''
+				    }
+			    }
+		    }
         
     }
 }
