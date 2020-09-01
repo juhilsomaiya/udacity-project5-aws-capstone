@@ -6,7 +6,7 @@ WORKDIR /tmp
 
 COPY package.json /tmp/
 
-RUN npm install express
+RUN npm install express@4.17.1
 
 WORKDIR /usr/src/app
 
