@@ -2,7 +2,7 @@
 
 cd app
 
-docker build --tag=imjuhilsomaiya/udacity_express_project .
+docker build --tag=imjuhilsomaiya/capstone_project_express .
 
 
 # listing images 
