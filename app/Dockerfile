@@ -2,7 +2,7 @@ FROM alpine:3.9
 
 ENV NODE_VERSION 12.18.3
 
-RUN apk update && apk add openssh=8.3_p1-r0 vim=8.2.1419-r0 bash=5.0.18-r0 --no-cache
+RUN apk update && apk add openssh=7.9_p1-r6 vim=8.1.1365-r0 bash=4.4.19-r1 --no-cache
 
 WORKDIR /tmp
 
