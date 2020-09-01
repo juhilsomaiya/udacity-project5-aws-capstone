@@ -1,4 +1,7 @@
 {
+    "build": {
+        "@saveall": true
+    },
     "format": {
         "jsbeautify": {
             "@formatOnSave": true
