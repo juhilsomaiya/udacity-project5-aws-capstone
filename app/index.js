@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 80;
+app.use(express.static('static'));
 
-app.get('/', (request, response) => {
-    return response.send("Hello World ! My name is Juhil Somaiya and It's my Capstone Project :)");
+app.get('/', (req, res) => {
+    res.sendFile('index.html');
 });
 
 app.listen(port, () => {
-    console.log('Express server running on port: ' + port);
+    console.log('Server is started on port: ' + port);
 });
