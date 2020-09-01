@@ -2,13 +2,13 @@ pipeline {
     agent any
     stages {
         
-        stage('Build Started'){
+        stage('---- Build Started ---- '){
             steps{
                 sh "echo Building ${env.JOB_NAME} ${env.BUILD_NUMBER}"
             }
         }
         
-        stage('Checking and Installing Hadolint'){
+        stage('---- Checking and Installing Hadolint ----'){
             steps{
                 sh '''
                     if ! [ -x "$(command -v hadolint)" ]; then
@@ -19,19 +19,19 @@ pipeline {
             }
         }
         
-        stage('Linting Docker File with hadolint'){
+        stage('---- Linting Docker File ----'){
             steps{
                 sh 'make lint'
             }
         }
         
-        stage('Building Docker Image') {
+        stage('---- Building Docker Image ----') {
             steps {
                 sh 'bash build_docker.sh'
             }
         }
         
-        stage('Pushing Docker Image') {
+        stage('---- Pushing Docker Image ----') {
             steps {
                 withDockerRegistry([url: "", credentialsId: "docker-id"]) {
                     sh 'bash upload_docker.sh'
@@ -39,9 +39,9 @@ pipeline {
             }
         }
   
-         stage('Deploying') {
+         stage('---- Deploying app to AWS EKS ----') {
               steps{
-                  echo 'Deploying to AWS...'
+                  echo 'Deploying to AWS EKS ....'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
                       sh "aws eks --region ap-south-1 update-kubeconfig --name udacity-capstone-project"
                       sh "kubectl config use-context arn:aws:eks:ap-south-1:272442762360:cluster/udacity-capstone-project"
@@ -54,7 +54,7 @@ pipeline {
             }
         }
         
-        stage('Checking app status') {
+        stage('---- Checking app status ----') {
               steps{
                   echo 'Checking app status'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
@@ -63,7 +63,7 @@ pipeline {
             }
         } 
         
-        stage('Checking rollout') {
+        stage('---- Checking rollout ----') {
               steps{
                   echo 'Checking rollout...'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
