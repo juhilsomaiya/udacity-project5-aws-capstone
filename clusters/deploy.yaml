@@ -39,9 +39,9 @@ spec:
       - name: udacity
         image: imjuhilsomaiya/capstone_project_express
         command: [
-          "/bin/bash" 
+          "/bin/bash", 
+          "start_docker.sh"
           ]
-        args: ["start_docker.sh"]
         imagePullPolicy: Always
         resources:
           limits:
