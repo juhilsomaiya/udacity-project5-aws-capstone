@@ -37,11 +37,11 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: udacity
-        image: imjuhilsomaiya/capstone:v1
+        image: imjuhilsomaiya/capstone_project_express
         command: [
-          "/bin/bash", 
-          "start_docker.sh"
+          "/bin/bash" 
           ]
+        args: ["start_docker.sh"]
         imagePullPolicy: Always
         resources:
           limits:
@@ -76,15 +76,11 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8082
     - name: https
       protocol: TCP
       port: 443
       targetPort: 443
-    - port: 80
-      targetPort: 80
-      nodePort: 30000
-      protocol: TCP
 ---
 kind: HorizontalPodAutoscaler
 apiVersion: autoscaling/v1

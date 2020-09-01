@@ -27,17 +27,9 @@ pipeline {
         
         stage('Building Docker Image') {
             steps {
-                sh '''
-						docker build -t imjuhilsomaiya/capstone_project app/
-					'''
+                sh 'bash build_docker.sh'
             }
         }
-        
-        /* stage('Running Docker Container') {
-          steps {
-            sh 'docker run -it --rm -d -p 9000:80 --name webserver imjuhilsomaiya/capstone'
-          }
-        } */
         
         stage('Pushing Docker Image') {
             steps {
@@ -47,7 +39,7 @@ pipeline {
             }
         }
         
-        /* stage('Deploying') {
+         stage('Deploying') {
               steps{
                   echo 'Deploying to AWS...'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
@@ -62,7 +54,7 @@ pipeline {
             }
         }
         
-        stage('Checking if app is up') {
+       /* stage('Checking if app is up') {
               steps{
                   echo 'Checking if app is up...'
                   withAWS(credentials: 'capstone', region: 'ap-south-1') {
@@ -70,57 +62,5 @@ pipeline {
                 }
             }
         } */ 
-        
-        
-        stage('Set current kubectl context') {
-		    	steps {
-				    withAWS(region:'ap-south-1', credentials:'capstone') {
-					    sh '''
-						    kubectl config use-context arn:aws:eks:ap-south-1:272442762360:cluster/udacity-capstone-project
-					    '''
-				    }
-			    }
-		    }
-        
-        stage('Deploy blue container') {
-			    steps {
-				    withAWS(region:'ap-south-1', credentials:'capstone') {
-					    sh '''
-						    kubectl apply -f ./clusters/bluecontroller.json
-					    '''
-				    }
-			    }
-		    }
-		    
-		    stage('Deploy green container') {
-			    steps {
-				    withAWS(region:'ap-south-1', credentials:'capstone') {
-					    sh '''
-						    kubectl apply -f ./clusters/greencontroller.json
-					    '''
-				    }
-			    }
-		    }
-		    
-		    stage('Create the service in the cluster, redirect to blue') {
-			    steps {
-				    withAWS(region:'ap-south-1', credentials:'capstone') {
-					    sh '''
-						    kubectl apply -f ./clusters/blueservice.json
-					    '''
-				    }
-			    }
-		    }
-		    
-		    stage('Create the service in the cluster, redirect to green') {
-			    steps {
-				    withAWS(region:'ap-south-1', credentials:'capstone') {
-					    sh '''
-						    kubectl apply -f ./clusters/greenservice.json
-					    '''
-				    }
-			    }
-		    }
-        
     }
 }

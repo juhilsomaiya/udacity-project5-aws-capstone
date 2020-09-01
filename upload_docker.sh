@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 
-dockerpath=imjuhilsomaiya/capstone_project
+dockerpath=imjuhilsomaiya/capstone_project_express
 
 echo "Docker ID and Image: $dockerpath"
 
-docker tag imjuhilsomaiya/capstone_project imjuhilsomaiya/capstone_project:v1
+docker tag imjuhilsomaiya/capstone_project_express imjuhilsomaiya/capstone_project_express:v1
 
-docker push imjuhilsomaiya/capstone_project:v1
+docker push imjuhilsomaiya/capstone_project_express:v1
